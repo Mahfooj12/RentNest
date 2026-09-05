@@ -151,15 +151,17 @@ Add screenshots of your project here:
 
 ```markdown
 ![Home Page](./screenshots/home.png)
-![Uploading image.png…]()
+<img width="1366" height="596" alt="image" src="https://github.com/user-attachments/assets/b73be1f4-e5c6-4c11-a5ba-7bdefb5774d5" />
+
 
 
 ![Property Page](./screenshots/property.png)
-![Uploading image.png…]()
+<img width="1366" height="720" alt="Screenshot 2026-09-05 201743" src="https://github.com/user-attachments/assets/d4e3791a-2bde-44b8-8018-e6d3ddd66eb5" />
+
 
 
 ![Login Page](./screenshots/login.png)
-![Uploading image.png…]()
+<img width="1366" height="768" alt="Screenshot 2026-09-05 201809" src="https://github.com/user-attachments/assets/922424eb-c2d0-4528-84f4-9f7d22e5270a" />
 
 ```
 
