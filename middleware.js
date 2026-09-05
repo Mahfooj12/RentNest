@@ -67,3 +67,5 @@ module.exports.validateReview = (req, res, next) => {
     next();
   }
 }
+
+module.exports.default = module.exports;
