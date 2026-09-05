@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate') %>
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="p-4 rounded-4 shadow-sm bg-white border-0 airbnb-form-card">
+        <h2 class="fw-bold mb-2 text-center">Edit Listing</h2>
+        <p class="text-muted mb-4 text-center">Update your space details to attract more guests.</p>
+        <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control rounded-pill" id="title" name="listing[title]" value="<%= listing.title %>" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control rounded-4" id="description" name="listing[description]" rows="3"><%= listing.description %></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control rounded-pill" id="location" name="listing[location]" value="<%= listing.location %>" required>
+          </div>
+          <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control rounded-pill" id="country" name="listing[country]" value="<%= listing.country %>" required>
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price (per night)</label>
+            <input type="number" class="form-control rounded-pill" id="price" name="listing[price]" min="0" value="<%= listing.price %>" required>
+          </div>
+          <div class="mb-3">
+            <label for="guests" class="form-label">Number of Guests</label>
+            <input type="number" class="form-control rounded-pill" id="guests" name="listing[guests]" min="1" value="<%= listing.guests %>" required>
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <% if (listing.image) { %>
+              <img src="<%= listing.image %>" alt="Listing Image" class="img-thumbnail mb-2" style="max-width: 200px;">
+            <% } %>
+            <input class="form-control rounded-pill" type="file" id="image" name="listing[image]" accept="image/*">
+            <div class="form-text">Leave blank to keep current image.</div>
+          </div>
+          <button type="submit" class="btn btn-pink rounded-pill w-100 py-2 fs-5">Update Listing</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.airbnb-form-card {
+  border-radius: 2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  border: 1px solid #f1f1f1;
+}
+</style>

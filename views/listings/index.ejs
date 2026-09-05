@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate') %>
+<div class="listing-grid">
+  <% listings.forEach(listing => { %>
+    <div>
+      <div class="card listing-card h-100 border-0 shadow-sm rounded-4 airbnb-listing-card position-relative overflow-hidden">
+        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+          <div class="position-absolute top-0 end-0 p-2 z-2">
+            <i class="fa-regular fa-heart fa-lg text-dark bg-white rounded-circle p-2 shadow-sm airbnb-heart"></i>
+          </div>
+          <img src="<%= listing.image %>" class="card-img-top rounded-4" style="aspect-ratio: 4/3; object-fit: cover; transition: transform 0.2s;" alt="listing image" />
+          <div class="card-body">
+            <div class="fw-semibold mb-1" style="font-size: 1.1rem;"><%= listing.title %></div>
+            <div class="text-muted mb-1" style="font-size: 0.95rem;"><%= listing.location %></div>
+            <% if (listing.reviews && listing.reviews.length > 0) { %>
+              <div class="mb-1">
+                <i class="fa fa-star text-warning"></i>
+                <%= (
+                  listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length
+                ).toFixed(1) %>
+                <span class="text-muted" style="font-size: 0.9rem;">(<%= listing.reviews.length %>)</span>
+              </div>
+            <% } %>
+            <div class="fw-bold" style="font-size: 1rem;">₹ <%= listing.price %> <span class="fw-normal text-muted">/ night</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<style>
+.airbnb-listing-card {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.airbnb-listing-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 1.5px 4px rgba(0,0,0,0.08);
+  transform: translateY(-2px) scale(1.02);
+  z-index: 2;
+}
+.airbnb-heart {
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.airbnb-heart:hover {
+  color: #FF385C !important;
+}
+</style>
+  
+  

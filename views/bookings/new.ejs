@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="p-4 rounded-4 shadow-sm bg-white border-0 airbnb-form-card">
+        <h2 class="fw-bold mb-2 text-center">Book: <%= listing.title %></h2>
+        <p class="text-muted mb-4 text-center">Choose your dates and number of guests to book this stay.</p>
+        <form action="/listings/<%= listing._id %>/book" method="POST">
+          <div class="mb-3">
+            <label for="checkIn" class="form-label">Check In</label>
+            <input type="text" class="form-control rounded-pill" id="checkIn" name="checkIn" required autocomplete="off">
+          </div>
+          <div class="mb-3">
+            <label for="checkOut" class="form-label">Check Out</label>
+            <input type="text" class="form-control rounded-pill" id="checkOut" name="checkOut" required autocomplete="off">
+          </div>
+          <div class="mb-3">
+            <label for="guests" class="form-label">Number of Guests</label>
+            <input type="number" class="form-control rounded-pill" id="guests" name="guests" min="1" max="<%= listing.guests %>" required>
+            <div class="form-text">Max guests: <%= listing.guests %></div>
+          </div>
+          <button type="submit" class="btn btn-pink rounded-pill w-100 py-2 fs-5">Book Now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr("#checkIn", { dateFormat: "Y-m-d", minDate: "today" });
+  flatpickr("#checkOut", { dateFormat: "Y-m-d", minDate: "today" });
+</script>
+<style>
+.airbnb-form-card {
+  border-radius: 2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  border: 1px solid #f1f1f1;
+}
+</style> 

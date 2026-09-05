@@ -1,0 +1,342 @@
+<!-- Desktop & Tablet Header (visible on md and up) -->
+<header>
+<div class="d-none d-md-block" style="position:sticky;">
+  <div id="airbnbStickyHeader" class="airbnb-sticky-header bg-white" style="position:sticky;top:0;z-index:1050;transition:box-shadow 0.2s, min-height 0.2s, padding 0.2s;min-height:120px;">
+    <!-- Top Row: Logo | Nav Links (centered) | Right Controls -->
+    <div class="container-fluid d-flex align-items-center justify-content-between py-3 airbnb-header-row" style="min-height:80px;transition:padding 0.2s, min-height 0.2s;">
+      <!-- Left: Logo -->
+      <div class="d-flex align-items-center flex-shrink-0">
+        <a class="navbar-brand d-flex align-items-center airbnb-logo-link" href="/listings" style="transition: font-size 0.2s;">
+          <!-- <i class="fa-brands fa-airbnb airbnb-logo-icon" style="color:#FF385C;font-size:2rem;transition:font-size 0.2s;"></i> -->
+           <i class="fa-solid fa-house-chimney" style="color:#FF385C;font-size:2rem;transition:font-size 0.2s;"></i>
+          <span class="ms-2 fw-bold airbnb-logo-text" style="color: #FF385C; font-size: 1.5rem; letter-spacing: -1px;transition:font-size 0.2s;">RentNest</span>
+        </a>
+      </div>
+      <!-- Center: Nav Links -->
+      <div class="d-flex align-items-center justify-content-center flex-grow-1" style="min-width:0;">
+        <div class="airbnb-nav-links d-flex justify-content-center w-100">
+          <a href="#" id="navHomes" class="nav-link fw-semibold px-3 active airbnb-nav-link" style="font-size:1.1rem;transition:font-size 0.2s;">Homes</a>
+          <!-- <a href="#" id="navExperiences" class="nav-link fw-semibold px-3 airbnb-nav-link" style="font-size:1.1rem;transition:font-size 0.2s;">Experiences</a> -->
+        </div>
+      </div>
+      <!-- Right: Controls -->
+      <div class="d-flex align-items-center gap-2 flex-shrink-0">
+        <a href="/listings/new" class="btn btn-link text-dark fw-semibold airbnb-header-link" style="transition:font-size 0.2s;">RentNest your home</a>
+        <button class="btn btn-light rounded-circle p-2 airbnb-header-globe" style="transition:padding 0.2s;"><i class="fa fa-globe"></i></button>
+        <div class="dropdown ms-2">
+          <button class="btn btn-light border rounded-pill d-flex align-items-center gap-2 px-3 py-2 airbnb-header-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="transition:padding 0.2s;">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-user-circle fs-4 text-secondary"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end rounded-4 shadow p-2 mt-2">
+            <% if (!currUser) { %>
+              <li><a class="dropdown-item d-flex align-items-center gap-2" href="/signup"><i class="fa fa-user-plus"></i> Sign up</a></li>
+              <li><a class="dropdown-item d-flex align-items-center gap-2" href="/login"><i class="fa fa-sign-in-alt"></i> Log in</a></li>
+            <% } %>
+            <% if (currUser) { %>
+              <li><a class="dropdown-item d-flex align-items-center gap-2" href="/logout"><i class="fa fa-sign-out-alt"></i> Log out</a></li>
+              <li><a class="dropdown-item d-flex align-items-center gap-2" href="/profile"><i class="fa fa-user"></i> Profile</a></li>
+            <% } %>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item d-flex align-items-center gap-2" href="/listings/new"><i class="fa fa-home"></i> RentNest your home</a></li>
+            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa fa-star"></i> Host an experience</a></li>
+            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa fa-question-circle"></i> Help Centre</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bars (both, toggle with JS) -->
+    <div class="container d-flex justify-content-center mt-2  airbnb-header-searchbar" style="transition:margin 0.2s;">
+      <!-- Homes Search Bar -->
+      <form id="homesSearchBar" class="airbnb-search-bar d-flex mb-2 bg-white shadow rounded-pill px-2 py-1 w-100" style="max-width: 700px;transition:box-shadow 0.2s,margin 0.2s;" onsubmit="return handleAirbnbSearch(event)">
+        <!-- Where -
+        <div class="search-section flex-grow-1 px-3 py-2 position-relative airbnb-search-where" tabindex="0">
+          <div class="fw-semibold small">Where</div>
+          <input type="text" class="form-control border-0 bg-transparent airbnb-where-input" placeholder="Search destinations" autocomplete="off">
+          <div class="airbnb-dropdown airbnb-where-dropdown rounded-4 shadow-lg p-0" style="display:none; min-width: 380px; max-width: 420px; position: absolute; top: 110%; left: 0; background: #fff; border: none;">
+            <div class="p-4">
+              <div class="fw-bold mb-3" style="font-size:1.3rem;">Where to?</div>
+              <div class="input-group mb-3">
+                <span class="input-group-text bg-white border-end-0"><i class="fa fa-search text-muted"></i></span>
+                <input type="text" class="form-control border-start-0 airbnb-where-input" placeholder="Search destinations">
+              </div>
+              <div class="mb-2 text-muted small">Suggested destinations</div>
+              <div class="list-group mb-2" style="max-height: 260px; overflow-y: auto;">
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-location-arrow text-primary"></i> <span>Nearby</span><span class="text-muted small ms-2">Find what's around you</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-city text-success"></i> <span>New Delhi, Delhi</span><span class="text-muted small ms-2">For sights like India Gate</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-water text-info"></i> <span>Mangalore, Karnataka</span><span class="text-muted small ms-2">For its seaside allure</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-tree text-success"></i> <span>Kochi, Kerala</span><span class="text-muted small ms-2">For nature lovers</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-gem text-warning"></i> <span>Udupi, Karnataka</span><span class="text-muted small ms-2">A hidden gem</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-mountain text-secondary"></i> <span>Shimla, Himachal</span><span class="text-muted small ms-2">Hill station</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-umbrella-beach text-info"></i> <span>Goa</span><span class="text-muted small ms-2">Beaches & parties</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-snowflake text-primary"></i> <span>Manali, Himachal</span><span class="text-muted small ms-2">Snow & adventure</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-city text-secondary"></i> <span>Mumbai, Maharashtra</span><span class="text-muted small ms-2">City of dreams</span></button>
+                <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-mountain-sun text-warning"></i> <span>Leh, Ladakh</span><span class="text-muted small ms-2">Mountains & monasteries</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Check in --
+        <div class="search-section flex-grow-1 px-3 py-2 border-start border-end airbnb-search-checkin position-relative" tabindex="0">
+          <div class="fw-semibold small">Check in</div>
+          <input type="text" class="form-control border-0 bg-transparent airbnb-checkin-input" placeholder="Add dates" autocomplete="off" readonly>
+          <div class="airbnb-dropdown airbnb-checkin-dropdown rounded-4 shadow-lg p-0" style="display:none; min-width: 480px; max-width: 600px; position: absolute; top: 110%; left: 0; background: #fff; border: none;">
+            <div class="p-4">
+              <div class="fw-bold mb-3" style="font-size:1.3rem;">Select dates</div>
+              <div class="airbnb-calendar-wrapper">
+                <!-- Airbnb-style calendar will be rendered here by JS --
+                <div id="airbnbCalendar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Check out --
+        <div class="search-section flex-grow-1 px-3 py-2 airbnb-search-checkout position-relative" tabindex="0">
+          <div class="fw-semibold small">Check out</div>
+          <input type="text" class="form-control border-0 bg-transparent airbnb-checkout-input" placeholder="Add dates" autocomplete="off" readonly>
+        </div>
+        <!-- Guests --
+        <div class="search-section flex-grow-1 px-3 py-2 border-start airbnb-search-guests position-relative" tabindex="0">
+          <div class="fw-semibold small">Who</div>
+          <input type="text" class="form-control border-0 bg-transparent airbnb-guests-input" placeholder="Add guests" autocomplete="off" readonly>
+          <div class="airbnb-dropdown airbnb-guests-dropdown rounded-4 shadow-lg p-0" style="display:none; min-width: 380px; max-width: 420px; position: absolute; top: 110%; left: 0; background: #fff; border: none;">
+            <div class="p-4">
+              <div class="fw-bold mb-3" style="font-size:1.3rem;">Who's coming?</div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span>Adults <span class="text-muted small">Ages 13 or above</span></span>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-minus" data-type="adults">-</button>
+                    <span class="mx-2 airbnb-guest-count" data-type="adults">0</span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-plus" data-type="adults">+</button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span>Children <span class="text-muted small">Ages 2–12</span></span>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-minus" data-type="children">-</button>
+                    <span class="mx-2 airbnb-guest-count" data-type="children">0</span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-plus" data-type="children">+</button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span>Infants <span class="text-muted small">Under 2</span></span>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-minus" data-type="infants">-</button>
+                    <span class="mx-2 airbnb-guest-count" data-type="infants">0</span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-plus" data-type="infants">+</button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span>Pets <a href="#" class="text-decoration-underline small ms-1">Bringing a service animal?</a></span>
+                  <div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-minus" data-type="pets">-</button>
+                    <span class="mx-2 airbnb-guest-count" data-type="pets">0</span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm airbnb-guest-plus" data-type="pets">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>-->
+        <!-- Search Button -->
+        <button class="btn btn-pink rounded-pill ms-2 mt-2" type="submit" style="height:48px; width:48px;"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+  </header>
+    <!-- Category Tabs -->
+    <nav class="airbnb-categories-nav mt-3" aria-label="Category navigation">
+      <button id="catLeft" class="cat-arrow" aria-label="Scroll left"><i class="fa fa-chevron-left"></i></button>
+      <div id="categoryScroll" class="category-scroll">
+        <button class="category-btn active"><i class="fa fa-home"></i><span>Historical homes</span></button>
+        <button class="category-btn"><i class="fa fa-star"></i><span>Icons</span></button>
+        <button class="category-btn"><i class="fa fa-tree"></i><span>Treehouses</span></button>
+        <button class="category-btn"><i class="fa fa-skiing"></i><span>Skiing</span></button>
+        <button class="category-btn"><i class="fa fa-fire"></i><span>Trending</span></button>
+        <button class="category-btn"><i class="fa fa-swimming-pool"></i><span>Amazing pools</span></button>
+        <button class="category-btn"><i class="fa fa-tractor"></i><span>Farms</span></button>
+        <button class="category-btn"><i class="fa fa-mountain"></i><span>Amazing views</span></button>
+        <button class="category-btn"><i class="fa fa-bed"></i><span>Rooms</span></button>
+        <button class="category-btn"><i class="fa fa-hotel"></i><span>Hotels</span></button>
+        <button class="category-btn"><i class="fa fa-umbrella-beach"></i><span>Beach</span></button>
+        <button class="category-btn"><i class="fa fa-water"></i><span>Lakefront</span></button>
+        <button class="category-btn"><i class="fa fa-mountain"></i><span>Mountains</span></button>
+        <button class="category-btn"><i class="fa fa-ship"></i><span>Boats</span></button>
+        <button class="category-btn"><i class="fa fa-city"></i><span>City life</span></button>
+        <button class="category-btn"><i class="fa fa-fire"></i><span>Campfires</span></button>
+        <button class="category-btn"><i class="fa fa-sun"></i><span>Sunny stays</span></button>
+        <button class="category-btn"><i class="fa fa-paw"></i><span>Pet-friendly</span></button>
+        <button class="category-btn"><i class="fa fa-binoculars"></i><span>Adventures</span></button>
+      </div>
+      <button id="catRight" class="cat-arrow" aria-label="Scroll right"><i class="fa fa-chevron-right"></i></button>
+      <div class="categories-controls">
+        <button class="btn btn-outline-secondary d-flex align-items-center gap-1" style="border-radius:12px;"><i class="fa fa-sliders"></i> Filters</button>
+        <span class="d-flex align-items-center gap-1 text-muted" style="font-size:1rem;"><i class="fa fa-tag text-pink"></i> Prices include all fees</span>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<!-- Mobile Header (visible below md) -->
+<div class="d-block d-md-none">
+  <!-- Mobile Search Bar -->
+  <div id="airbnbMobileHeader" class="bg-white pt-3 pb-2 px-2 shadow-sm airbnb-mobile-header" style="position:sticky;top:0;z-index:1050;transition:box-shadow 0.2s, padding 0.2s;">
+    <form class="airbnb-search-bar-mobile d-flex align-items-center bg-white shadow rounded-pill px-3 py-2 w-100" style="max-width: 100vw;transition:box-shadow 0.2s, padding 0.2s;">
+      <i class="fa fa-search text-muted me-2"></i>
+      <input type="text" class="form-control border-0 bg-transparent" placeholder="Start your search" style="font-size:1.1rem;text-align:center;" readonly id="openMobileSearchModal">
+    </form>
+  </div>
+  <!-- Mobile Search Modal -->
+  <div id="mobileSearchModal" class="mobile-search-modal" style="display:none;">
+    <div class="mobile-search-header d-flex align-items-center p-3 border-bottom">
+      <button id="closeMobileSearch" class="close-btn btn btn-link p-0 me-3" style="font-size:2rem;">&times;</button>
+      <span class="tab active fw-bold me-3">Homes</span>
+      <span class="tab text-muted">Experiences</span>
+    </div>
+    <div class="mobile-search-content p-3">
+      <!-- Step 1: Where -->
+      <div class="mobile-search-step" id="mobileStepWhere">
+        <div class="fw-bold mb-3" style="font-size:1.3rem;">Where to?</div>
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-white border-end-0"><i class="fa fa-search text-muted"></i></span>
+          <input type="text" class="form-control border-start-0" placeholder="Search destinations">
+        </div>
+        <div class="mb-2 text-muted small">Suggested destinations</div>
+        <div class="list-group mb-4">
+          <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-location-arrow text-primary"></i> <span>Nearby</span><span class="text-muted small ms-2">Find what's around you</span></button>
+          <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-city text-success"></i> <span>New Delhi, Delhi</span><span class="text-muted small ms-2">For sights like India Gate</span></button>
+          <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-water text-info"></i> <span>Mangalore, Karnataka</span><span class="text-muted small ms-2">For its seaside allure</span></button>
+          <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-tree text-success"></i> <span>Kochi, Kerala</span><span class="text-muted small ms-2">For nature lovers</span></button>
+          <button class="list-group-item list-group-item-action d-flex align-items-center gap-2"><i class="fa fa-gem text-warning"></i> <span>Udupi, Karnataka</span><span class="text-muted small ms-2">A hidden gem</span></button>
+        </div>
+      </div>
+      <!-- Step 2: When (hidden by default) -->
+      <div class="mobile-search-step" id="mobileStepWhen" style="display:none;">
+        <div class="fw-bold mb-3" style="font-size:1.3rem;">When's your trip?</div>
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-white border-end-0"><i class="fa fa-calendar text-muted"></i></span>
+          <input type="text" class="form-control border-start-0" placeholder="Add dates">
+        </div>
+      </div>
+      <!-- Step 3: Who (hidden by default) -->
+      <div class="mobile-search-step" id="mobileStepWho" style="display:none;">
+        <div class="fw-bold mb-3" style="font-size:1.3rem;">Who's coming?</div>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span>Adults <span class="text-muted small">Ages 13 or above</span></span>
+            <div>
+              <button type="button" class="btn btn-outline-secondary btn-sm">-</button>
+              <span class="mx-2">0</span>
+              <button type="button" class="btn btn-outline-secondary btn-sm">+</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span>Children <span class="text-muted small">Ages 2–12</span></span>
+            <div>
+              <button type="button" class="btn btn-outline-secondary btn-sm">-</button>
+              <span class="mx-2">0</span>
+              <button type="button" class="btn btn-outline-secondary btn-sm">+</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span>Infants <span class="text-muted small">Under 2</span></span>
+            <div>
+              <button type="button" class="btn btn-outline-secondary btn-sm">-</button>
+              <span class="mx-2">0</span>
+              <button type="button" class="btn btn-outline-secondary btn-sm">+</button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span>Pets <a href="#" class="text-decoration-underline small ms-1">Bringing a service animal?</a></span>
+            <div>
+              <button type="button" class="btn btn-outline-secondary btn-sm">-</button>
+              <span class="mx-2">0</span>
+              <button type="button" class="btn btn-outline-secondary btn-sm">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-search-footer d-flex justify-content-between align-items-center p-3 border-top">
+      <button id="clearAllBtn" class="btn btn-link text-decoration-underline">Clear all</button>
+      <button id="mobileSearchBtn" class="btn btn-pink rounded-pill px-4 py-2">Search</button>
+    </div>
+  </div>
+  <!-- Mobile Category Bar -->
+  <div class="bg-white border-bottom shadow-sm overflow-auto airbnb-mobile-categories" style="white-space:nowrap;transition:padding 0.2s;">
+    <div class="d-flex flex-nowrap align-items-center gap-2 px-2 py-2">
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-home"></i><br><span style="font-size:0.85em;">Historical homes</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-star"></i><br><span style="font-size:0.85em;">Icons</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-tree"></i><br><span style="font-size:0.85em;">Treehouses</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-cabin"></i><br><span style="font-size:0.85em;">Tiny homes</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-skiing"></i><br><span style="font-size:0.85em;">Skiing</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-fire"></i><br><span style="font-size:0.85em;">Trending</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-swimming-pool"></i><br><span style="font-size:0.85em;">Amazing pools</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-tractor"></i><br><span style="font-size:0.85em;">Farms</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-mountain"></i><br><span style="font-size:0.85em;">Amazing views</span></a>
+      <a href="#" class="nav-link text-center mx-2"><i class="fa fa-bed"></i><br><span style="font-size:0.85em;">Rooms</span></a>
+    </div>
+  </div>
+  <!-- Mobile Bottom Nav Bar -->
+  <nav class="navbar navbar-light bg-white border-top shadow-lg fixed-bottom justify-content-around" style="z-index:1050;">
+    <a href="/listings" class="nav-link text-center flex-fill" style="color:#FF385C;">
+      <i class="fa fa-search fa-lg"></i><br>
+      <span style="font-size:0.95em;">Explore</span>
+    </a>
+    <a href="#" class="nav-link text-center flex-fill text-muted">
+      <i class="fa fa-heart fa-lg"></i><br>
+      <span style="font-size:0.95em;">Wishlists</span>
+    </a>
+    <a href="/login" class="nav-link text-center flex-fill text-muted">
+      <i class="fa fa-user fa-lg"></i><br>
+      <span style="font-size:0.95em;">Log in</span>
+    </a>
+    <a href="/signup" class="nav-link text-center flex-fill text-muted">
+      <i class="fa fa-user fa-lg"></i><br>
+      <span style="font-size:0.95em;">Sign up</span>
+    </a>
+  </nav>
+</div>
+
+<script>
+  // Sticky header shrink and shadow on scroll (desktop/tablet)
+  window.addEventListener('scroll', function() {
+    var header = document.getElementById('airbnbStickyHeader');
+    if (header) {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+    // Mobile shrink
+    var mheader = document.getElementById('airbnbMobileHeader');
+    var mcat = document.querySelector('.airbnb-mobile-categories');
+    if (mheader && mcat) {
+      if (window.scrollY > 10) {
+        mheader.classList.add('scrolled');
+        mcat.classList.add('scrolled');
+      } else {
+        mheader.classList.remove('scrolled');
+        mcat.classList.remove('scrolled');
+      }
+    }
+  });
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<script>
+function handleAirbnbSearch(e) {
+  e.preventDefault();
+  const location = document.querySelector('.airbnb-where-input').value;
+  const checkin = document.querySelector('.airbnb-checkin-input').value;
+  const checkout = document.querySelector('.airbnb-checkout-input').value;
+  const guests = document.querySelector('.airbnb-guests-input').value;
+  alert(`Searching for: ${location}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}`);
+  // TODO: Replace with real search logic or redirect
+  return false;
+}
+</script>
