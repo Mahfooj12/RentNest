@@ -149,19 +149,19 @@ node_modules/
 
 Add screenshots of your project here:
 
-```markdown
+
+## 📸 Screenshots
+
+### 🏠 Home Page
 ![Home Page](./screenshots/home.png)
-![Uploading image.png…]()
 
-
+### 🏨 Property Page
 ![Property Page](./screenshots/property.png)
-![Uploading image.png…]()
 
-
+### 🔐 Login Page
 ![Login Page](./screenshots/login.png)
-![Uploading image.png…]()
 
-```
+
 
 ## 🌟 Future Improvements
 
